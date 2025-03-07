@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:16.1
+    container_name: car-shop-postgres
+    environment:
+      POSTGRES_DB: "car_shop" 
+      POSTGRES_USER: "car-shop-admin"
+      POSTGRES_PASSWORD: "password123"
+    ports:
+      - "5432:5432"
+    networks:
+      - car-shop-network
+  
+  car_shop:
+    image: car-shop:latest
+    container_name: car-shop
+    ports:
+      - "4005:4005"
+    depends_on:
+      - postgres
+    networks:
+      - car-shop-network
+
+networks:
+  car-shop-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.100.0/25
