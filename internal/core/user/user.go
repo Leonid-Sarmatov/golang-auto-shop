@@ -11,7 +11,7 @@ import (
 type storage interface {
 	AddUser(user models.User) error
 	DeleteUser(user models.User) error
-	UpdateUserByEmail(email string, user models.User) error
+	UpdateUser(user models.User) error
 	GetUserByEmail(email string) (models.User, error)
 	GetUserCarsByEmail(email string) ([]*models.CarModel, error)
 }

@@ -1,0 +1,146 @@
+syntax = "proto3";
+
+package generated;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "golang_auto_shop/internal/transport/grpc/generated";
+
+// Описание сервиса
+service CarShop {
+  // Операции с пользователями
+  rpc AddUser (AddUserRequest) returns (Response);
+  rpc DeleteUser (IDRequest) returns (Response);
+  rpc UpdateUser (UpdateUserRequest) returns (Response);
+  rpc GetUserUser (IDRequest) returns (User);
+
+  // Операции с двигателями
+  rpc AddEngine (AddEngineRequest) returns (Response);
+  rpc DeleteEngine (IDRequest) returns (Response);
+  rpc UpdateEngine (UpdateEngineRequest) returns (Response);
+  rpc GetEngine (IDRequest) returns (Engine);
+
+  // Операции с автомобилями
+  rpc AddCarModel (AddCarModelRequest) returns (Response);
+  rpc DeleteCarModel (IDRequest) returns (Response);
+  rpc UpdateCarModel (UpdateCarModelRequest) returns (Response);
+  rpc GetCarModel (IDRequest) returns (CarModel);
+
+  // Операции связывания
+  rpc AddCarToUser (AddCarToUserRequest) returns (Response);
+  rpc RemoveCarFromUser (RemoveCarFromUserRequest) returns (Response);
+  rpc GetUserCars (GetUserCarsRequest) returns (CarModels);
+}
+
+// Общие сообщения
+message Response {
+  bool success = 1;
+  string message = 2;
+}
+
+message IDRequest {
+  string id = 1;
+}
+
+// Фильтры
+message YearFilter {
+  int32 min_year = 1;
+  int32 max_year = 2;
+}
+
+message PowerFilter {
+  int32 min_power = 1;
+  int32 max_power = 2;
+}
+
+// Двигатели
+message Engine {
+  int32 id = 1;
+  string name = 2;
+  int32 power = 3;
+  google.protobuf.Timestamp created_at = 4;
+}
+
+message Engines {
+  repeated Engine engine = 1;
+}
+
+message AddEngineRequest {
+  string name = 1;
+  int32 power = 2;
+}
+
+message UpdateEngineRequest {
+  string id = 1;
+  oneof update {
+    string name = 2;
+    int32 power = 3;
+  }
+}
+
+// Автобобили
+message CarModel {
+  string name = 1;
+  int32 year = 2;
+  Engine engine = 3;
+  google.protobuf.Timestamp created_at = 4;
+}
+
+message CarModels {
+  repeated CarModel car_model = 1;
+}
+
+message AddCarModelRequest {
+  string name = 1;
+  int32 year = 2;
+  string engine_id = 3;
+}
+
+message UpdateCarModelRequest {
+  string id = 1;
+  oneof update {
+    string name = 2;
+    int32 year = 3;
+    string engine_id = 4;
+  }
+}
+
+// Пользователи
+message User {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  google.protobuf.Timestamp created_at = 4;
+}
+
+message Users {
+  repeated User user = 1;
+}
+
+message AddUserRequest {
+  string name = 1;
+  int32 year = 2;
+}
+
+message UpdateUserRequest {
+  string id = 1;
+  oneof update {
+    string name = 2;
+    string email = 3;
+  }
+}
+
+// Связи
+message AddCarToUserRequest {
+  string user_id = 1;
+  string car_id = 2;
+}
+
+message RemoveCarFromUserRequest {
+  string user_id = 1;
+  string car_id = 2;
+}
+
+message GetUserCarsRequest {
+  string user_id = 1;
+}
