@@ -12,7 +12,7 @@ service CarShop {
   rpc AddUser (AddUserRequest) returns (Response);
   rpc DeleteUser (IDRequest) returns (Response);
   rpc UpdateUser (UpdateUserRequest) returns (Response);
-  rpc GetUserUser (IDRequest) returns (User);
+  rpc GetUser (IDRequest) returns (User);
 
   // Операции с двигателями
   rpc AddEngine (AddEngineRequest) returns (Response);
@@ -119,7 +119,8 @@ message Users {
 
 message AddUserRequest {
   string name = 1;
-  int32 year = 2;
+  string email = 2;
+  int32 year = 3;
 }
 
 message UpdateUserRequest {

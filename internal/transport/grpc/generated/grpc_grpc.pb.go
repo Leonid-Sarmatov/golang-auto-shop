@@ -22,7 +22,7 @@ const (
 	CarShop_AddUser_FullMethodName           = "/generated.CarShop/AddUser"
 	CarShop_DeleteUser_FullMethodName        = "/generated.CarShop/DeleteUser"
 	CarShop_UpdateUser_FullMethodName        = "/generated.CarShop/UpdateUser"
-	CarShop_GetUserUser_FullMethodName       = "/generated.CarShop/GetUserUser"
+	CarShop_GetUser_FullMethodName           = "/generated.CarShop/GetUser"
 	CarShop_AddEngine_FullMethodName         = "/generated.CarShop/AddEngine"
 	CarShop_DeleteEngine_FullMethodName      = "/generated.CarShop/DeleteEngine"
 	CarShop_UpdateEngine_FullMethodName      = "/generated.CarShop/UpdateEngine"
@@ -46,7 +46,7 @@ type CarShopClient interface {
 	AddUser(ctx context.Context, in *AddUserRequest, opts ...grpc.CallOption) (*Response, error)
 	DeleteUser(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*Response, error)
 	UpdateUser(ctx context.Context, in *UpdateUserRequest, opts ...grpc.CallOption) (*Response, error)
-	GetUserUser(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*User, error)
+	GetUser(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*User, error)
 	// Операции с двигателями
 	AddEngine(ctx context.Context, in *AddEngineRequest, opts ...grpc.CallOption) (*Response, error)
 	DeleteEngine(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*Response, error)
@@ -101,10 +101,10 @@ func (c *carShopClient) UpdateUser(ctx context.Context, in *UpdateUserRequest, o
 	return out, nil
 }
 
-func (c *carShopClient) GetUserUser(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*User, error) {
+func (c *carShopClient) GetUser(ctx context.Context, in *IDRequest, opts ...grpc.CallOption) (*User, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(User)
-	err := c.cc.Invoke(ctx, CarShop_GetUserUser_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, CarShop_GetUser_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -231,7 +231,7 @@ type CarShopServer interface {
 	AddUser(context.Context, *AddUserRequest) (*Response, error)
 	DeleteUser(context.Context, *IDRequest) (*Response, error)
 	UpdateUser(context.Context, *UpdateUserRequest) (*Response, error)
-	GetUserUser(context.Context, *IDRequest) (*User, error)
+	GetUser(context.Context, *IDRequest) (*User, error)
 	// Операции с двигателями
 	AddEngine(context.Context, *AddEngineRequest) (*Response, error)
 	DeleteEngine(context.Context, *IDRequest) (*Response, error)
@@ -265,8 +265,8 @@ func (UnimplementedCarShopServer) DeleteUser(context.Context, *IDRequest) (*Resp
 func (UnimplementedCarShopServer) UpdateUser(context.Context, *UpdateUserRequest) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateUser not implemented")
 }
-func (UnimplementedCarShopServer) GetUserUser(context.Context, *IDRequest) (*User, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetUserUser not implemented")
+func (UnimplementedCarShopServer) GetUser(context.Context, *IDRequest) (*User, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetUser not implemented")
 }
 func (UnimplementedCarShopServer) AddEngine(context.Context, *AddEngineRequest) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddEngine not implemented")
@@ -376,20 +376,20 @@ func _CarShop_UpdateUser_Handler(srv interface{}, ctx context.Context, dec func(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CarShop_GetUserUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CarShop_GetUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(IDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CarShopServer).GetUserUser(ctx, in)
+		return srv.(CarShopServer).GetUser(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: CarShop_GetUserUser_FullMethodName,
+		FullMethod: CarShop_GetUser_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CarShopServer).GetUserUser(ctx, req.(*IDRequest))
+		return srv.(CarShopServer).GetUser(ctx, req.(*IDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -612,8 +612,8 @@ var CarShop_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _CarShop_UpdateUser_Handler,
 		},
 		{
-			MethodName: "GetUserUser",
-			Handler:    _CarShop_GetUserUser_Handler,
+			MethodName: "GetUser",
+			Handler:    _CarShop_GetUser_Handler,
 		},
 		{
 			MethodName: "AddEngine",
